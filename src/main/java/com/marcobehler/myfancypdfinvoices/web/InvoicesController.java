@@ -4,11 +4,12 @@ import com.marcobehler.myfancypdfinvoices.dto.InvoiceDto;
 import com.marcobehler.myfancypdfinvoices.model.Invoice;
 import com.marcobehler.myfancypdfinvoices.service.InvoiceService;
 import jakarta.validation.Valid;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RestController
+@Controller
 public class InvoicesController {
 
     private final InvoiceService invoiceService;
@@ -19,7 +20,7 @@ public class InvoicesController {
 
     @GetMapping("/")
     public String getIndexPage(){
-        return "Hello World";
+        return "index.html";
     }
 
     @GetMapping("/invoices")

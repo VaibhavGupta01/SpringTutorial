@@ -2,17 +2,23 @@ package com.marcobehler.myfancypdfinvoices.context;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.marcobehler.myfancypdfinvoices.ApplicationLauncher;
+import org.h2.jdbcx.JdbcDataSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.validation.beanvalidation.MethodValidationPostProcessor;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.thymeleaf.spring6.SpringTemplateEngine;
 import org.thymeleaf.spring6.templateresolver.SpringResourceTemplateResolver;
 import org.thymeleaf.spring6.view.ThymeleafViewResolver;
 
+import javax.sql.DataSource;
+
 @Configuration
 @ComponentScan(basePackageClasses = ApplicationLauncher.class)
+@PropertySource("classpath:/application.properties")
 @EnableWebMvc
 public class ApplicationConfiguration {
     @Bean //
@@ -23,7 +29,6 @@ public class ApplicationConfiguration {
     public ObjectMapper objectMapper(){
         return new ObjectMapper();
     }
-
     @Bean
     public ThymeleafViewResolver viewResolver() {
         ThymeleafViewResolver viewResolver = new ThymeleafViewResolver();
@@ -47,5 +52,18 @@ public class ApplicationConfiguration {
         templateResolver.setPrefix("classpath:/templates/");
         templateResolver.setCacheable(false);
         return templateResolver;
+    }
+
+    @Bean
+    public DataSource dataSource() {
+        JdbcDataSource ds = new JdbcDataSource();
+        ds.setURL("jdbc:h2:~/myFirstH2Database;INIT=RUNSCRIPT FROM 'classpath:schema.sql'");
+        ds.setUser("sa");
+        ds.setPassword("sa");
+        return ds;
+    }
+    @Bean
+    public JdbcTemplate jdbcTemplate() {
+        return new JdbcTemplate(dataSource());
     }
 }

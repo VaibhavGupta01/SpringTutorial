@@ -30,8 +30,8 @@ public class InvoicesController {
     }
 
     @GetMapping("/invoices")
-    public List<Invoice> invoices() {
-        return invoiceService.findAll();
+    public List<Invoice> invoices(Model model) {
+        return invoiceService.findAll(model);
     }
 
     @PostMapping("/invoices")

@@ -1,0 +1,19 @@
+POST http://localhost:8080/invoices
+Accept: application/json
+Cache-Control: no-cache
+Content-Type: application/json
+
+{   "amount": 50,   "user_id": "freddieFox" }
+
+###
+POST http://localhost:8080/invoices
+Accept: application/json
+Cache-Control: no-cache
+Content-Type: application/json
+
+{   "amount": 100,   "user_id": "vaibhav" }
+
+###
+GET http://localhost:8080/invoices
+Accept: application/json
+#Accept: */*

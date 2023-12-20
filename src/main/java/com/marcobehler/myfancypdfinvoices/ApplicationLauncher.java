@@ -29,13 +29,13 @@ public class ApplicationLauncher {
         tomcat.start();
     }
 
-    private static WebApplicationContext createApplicationContext(ServletContext servletContext) {
-        AnnotationConfigWebApplicationContext ctx = new AnnotationConfigWebApplicationContext ();
+    public static WebApplicationContext createApplicationContext(ServletContext servletContext) {
+        AnnotationConfigWebApplicationContext ctx = new AnnotationConfigWebApplicationContext();
         ctx.register(ApplicationConfiguration.class);
         // without this enableWebMvc annotation doesn't work
         ctx.setServletContext(servletContext);
 
-        ctx.registerShutdownHook();
+
         ctx.refresh();
         ctx.registerShutdownHook();
         return ctx;
